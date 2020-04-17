@@ -1,0 +1,36 @@
+http:
+  basePath: "/api/v1/*"
+  host: "0.0.0.0"
+  port: "8081"
+  consolePath: "/console/*"
+  
+api:
+  discovery:
+    id: ""
+
+#----Common Block---No change Needed----           
+cloudhub:
+  username: "![B6oQRyaYk8CZt23whX4G4w==]"
+  password: "![NHwpguDpu3orWYyyXHS8Uw==]"
+  
+smtp:
+  host: "mail.fatface.net"
+  port: "465"
+  user: "![XImJcfQv4D6cYan0i6XwPZi8Uxv0OkDQvTITnsw/onM=]"
+  password: "![r9f7FSUCH+2adxR8OeswFg==]"
+  subject: "Fatface API Exception"
+#----Common Block---No change Needed----
+
+db:
+ audit: 
+  config:
+   host: "db-audit-demo.czox2kq9otxp.eu-west-1.rds.amazonaws.com"
+   port: "3306"
+   user: "![SMja/nV+bgct1YakjpE9Dw==]"
+   password: "![s+9bS/QnD6wOPefrjUqlhA==]"
+   database: "sys" 
+    
+sqs:
+  accessKey: "![iKDP0/LYfR1ghGUCOAayKYI5kMT/ieTr3IMibNfn9y8=]"
+  secretKey: "![z8W9r4EBG78ATEDLlzRgrDu8pSr3cf8u0RPGoG/mEyLZSeyc1prL/JqYzbF2CWUY]"
+  region: "![6lleIG6Qoif/fTA7pK+sUA==]"

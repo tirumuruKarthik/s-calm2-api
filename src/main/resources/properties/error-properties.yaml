@@ -1,0 +1,17 @@
+#Status Responses 
+errors:
+  calm2:
+    response:
+      status:
+        '200': "Licence has been completely fulfilled"
+        '206': "Licence has been partially fulfilled"
+        '210': "Software has been completely fulfilled"
+        '216': "Software has been partially fulfilled"
+        '220': "Licence and software have been completely fulfilled"
+        '226': "Licence and software have been partially fulfilled"
+        '404': "Account or order line not found"
+        '409': "Conflict: order line cannot be deleted because some licenses have already been used"
+        '410': "Conflict: order line cannot be updated because some licenses have already been used"
+        '403': "Permission error"
+        '503': "Failed to connect to fulfilment endpoint, all retries have been exhausted"
+

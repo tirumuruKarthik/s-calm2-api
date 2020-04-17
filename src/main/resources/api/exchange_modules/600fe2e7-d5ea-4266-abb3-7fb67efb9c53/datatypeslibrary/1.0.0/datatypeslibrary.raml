@@ -1,0 +1,16 @@
+#%RAML 1.0 Library
+usage: |
+ library of datatypes to form domain driven model (Bounded Context) to be used by concerned APIs
+
+types:
+  orderline:
+    displayName: order line details
+    type: array
+    items: !include dataTypes//orderline.raml
+  customer: 
+    displayName: customer details
+    type: array
+    items: !include dataTypes//customer.raml
+  license-factory: string
+  status-id: number
+  status-info: string

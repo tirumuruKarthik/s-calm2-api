@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+	
+	<http:listener-config name="s-calm2-api-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="8081" />
+    </http:listener-config>	
+    <db:config name="Database_Config" doc:name="Database Config" doc:id="235bfdb2-fdbf-4648-94d0-04d209ee4664" >
+		<db:my-sql-connection host="${db.audit.config.host}" port="${db.audit.config.port}" user="${secure::db.audit.config.user}" password="${secure::db.audit.config.password}" database="${db.audit.config.database}" />
+	</db:config>
+	<import doc:name="Import" doc:id="41133f26-6fea-4bb8-8634-35a5d49b6143" file="common-auditing-framework.xml" />
+	<import doc:name="Import" doc:id="2bd29da3-084d-4cf1-896d-cc8309a98de2" file="common-logging-framework.xml" />
+	<configuration-properties doc:name="Configuration properties" doc:id="910103d6-8782-409b-8ed4-7512e95ad436" file="properties/${mule.env}-properties.yaml" />
+	<configuration-properties doc:name="Configuration properties" doc:id="f0584373-eb2a-49f6-9729-3f1ff2150b43" file="properties/common-properties.yaml" />
+	<configuration-properties doc:name="Configuration properties" doc:id="668b4221-be46-42b8-94e6-4afb98024344" file="properties/error-properties.yaml" />
+	<import doc:name="Import" doc:id="67b58860-a77a-4d24-998c-75ed2e333370" file="common-error-handling.xml" />
+	<configuration doc:name="Configuration" doc:id="ccd0dfeb-950a-4ddd-b570-30795de8909d" defaultErrorHandler-ref="GlobalExceptionStrategy" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="c0bd532a-b394-48b7-9373-888cc10ee8d3" file="properties/${mule.env}-properties.yaml" key="${encryption.key}" />
+	<global-property doc:name="Global Property" doc:id="9b14518b-433a-4b24-b532-bf452127c4d5" name="mule.env" value="dev" />
+</mule>

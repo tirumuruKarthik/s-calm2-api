@@ -1,0 +1,37 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/10d66a87-15d8-443c-aee2-09b92e5fe421/ # 
+title: s-calm2-api
+version: v1
+
+
+uses:
+  dataTypesLib: exchange_modules/600fe2e7-d5ea-4266-abb3-7fb67efb9c53/datatypeslibrary/1.0.0/datatypeslibrary.raml
+  resourceTypesLib: exchange_modules/600fe2e7-d5ea-4266-abb3-7fb67efb9c53/resourcetypeslibrary/1.0.0/resourcetypeslibrary.raml
+  traitsLib: exchange_modules/600fe2e7-d5ea-4266-abb3-7fb67efb9c53/traitslibrary/1.0.0/traitslibrary.raml
+  
+/erpOrderLines/{erpOrderId}/{erpOrderLineId}:  
+  description: |
+        Resource to update order line fulfilment status coming from Orcle-ERP System based on order id an order line id.
+  type:
+    resourceTypesLib.member:
+  is: [traitsLib.traceable: {required: true}, traitsLib.secured: {required: true}]
+  put:
+    description: |
+      Post order line updates to CALM2 system
+    headers:
+      ERP-Account-Number:
+        type: string
+        description: ERP account number              
+    body:
+      application/json:
+        example: !include examples/update-order-lines.raml
+        properties:
+          orderline: dataTypesLib.orderline
+          customer: dataTypesLib.customer
+          license-factory: dataTypesLib.license-factory
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+                  { "responseCode" : 0,  "responseText" : "success"}
