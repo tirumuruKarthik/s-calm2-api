@@ -9,10 +9,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 			<ee:message >
 			</ee:message>
 			<ee:variables >
-				<ee:set-variable variableName="flowName" ><![CDATA[%dw 2.0
-output application/java
----
-vars.apiName ++ ": " ++ 's-calm2-api-impl-sub-flow']]></ee:set-variable>
+				<ee:set-variable variableName="flowName" resource="dwl/set-variables.dwl"></ee:set-variable>
 			</ee:variables>
 		</ee:transform>
 		<ee:transform doc:name="Request Payload For S CALM2" doc:id="55acd0d4-f72f-455c-9cbb-8377eda8f382" >
@@ -22,16 +19,12 @@ vars.apiName ++ ": " ++ 's-calm2-api-impl-sub-flow']]></ee:set-variable>
 		</ee:transform>
 		<flow-ref doc:name="Log Process Entry" doc:id="3ee01fa3-7176-43ad-8d9c-0bf0370803cc" name="log-process-entry-sub-flow"/>
 		<flow-ref doc:name="Audit Process Entry" doc:id="871609ca-4bc4-4645-831d-857c948066ed" name="audit-process-entry-sub-flow"/>
-		<logger level="INFO" doc:name="Logger" doc:id="37003824-fda9-4f8d-860a-fac1e64422e9" message="#[payload]" />
+		<until-successful maxRetries="${retry.attempts}" doc:name="Until Successful" doc:id="717bf78a-5d8a-4aa8-af06-11230511a2ba" millisBetweenRetries="${retry.frequency}">
+			<logger level="INFO" doc:name="Logger" doc:id="37003824-fda9-4f8d-860a-fac1e64422e9" message="#[payload]" />
+		</until-successful>
 		<ee:transform doc:name="Response Payload" doc:id="c12c7c73-377b-4d88-904c-41943c59bc49" >
 			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
-output application/json
----
-if (vars.httpStatus == "201")
-	{ "responseCode" : vars.httpStatus,
-	"responseText" : p('errors.calm2.response.status.200') }
-else { "responseCode" : vars.httpStatus }]]></ee:set-payload>
+				<ee:set-payload resource="dwl/build-api-response.dwl" />
 			</ee:message>
 			<ee:variables >
 			</ee:variables>
