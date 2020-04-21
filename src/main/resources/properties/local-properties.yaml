@@ -4,7 +4,7 @@ http:
   basePath: "/api/v1/*"
   consolePath: "/console/*"
 
-mock:
+calm2:
   host: "localhost"
   port: "8082"
   basePath: "/api"

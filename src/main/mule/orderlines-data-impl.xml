@@ -22,16 +22,16 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		<flow-ref doc:name="Log Process Entry" doc:id="3ee01fa3-7176-43ad-8d9c-0bf0370803cc" name="log-process-entry-sub-flow"/>
 		<flow-ref doc:name="Audit Process Entry" doc:id="871609ca-4bc4-4645-831d-857c948066ed" name="audit-process-entry-sub-flow"/>
 		<until-successful maxRetries="${retry.attempts}" doc:name="Until Successful" doc:id="c495d515-a1da-4a77-82c4-4e1d15cb452b" millisBetweenRetries="${retry.frequency}">
-			<http:request method="PUT" doc:name="Invoke Mock API" doc:id="c7ac7b00-2584-467a-b113-c2dc764004ef" path="${mock.path}" sendCorrelationId="ALWAYS" outputMimeType="application/json" config-ref="s_mock_Http_Request_configuration">
+			<http:request method="PUT" doc:name="Invoke CALM2 API" doc:id="c7ac7b00-2584-467a-b113-c2dc764004ef" path="${calm2.path}" sendCorrelationId="ALWAYS" outputMimeType="application/json" config-ref="S_CALM2_Http_Request_configuration">
 				<http:headers ><![CDATA[#[output application/java
 ---
 {
 	"Transaction-Id" : vars.transactionId,
-	"client_secret" : p('calm2.client_secret'),
+	"client_secret" : p('mock.client_secret'),
 	"X-CustCode" : "wqe124",
 	"Transaction-Start-Time" : vars.transactionStartTime,
 	"X-ErpAccountNumber" : "1234",
-	"client_id" : p('calm2.client_id')
+	"client_id" : p('mock.client_id')
 }]]]></http:headers>				
 			
 
