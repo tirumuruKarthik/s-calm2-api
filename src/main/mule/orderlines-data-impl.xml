@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<sub-flow name="s-calm2-api-impl-sub-flow" doc:id="86f745a4-cdc0-46b6-bdea-95ac04a3c1aa" >
 		<ee:transform doc:name="Set Variables" doc:id="c0e32b6d-4b4c-4dc4-82f3-0ec504333009" >
@@ -19,9 +21,24 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		</ee:transform>
 		<flow-ref doc:name="Log Process Entry" doc:id="3ee01fa3-7176-43ad-8d9c-0bf0370803cc" name="log-process-entry-sub-flow"/>
 		<flow-ref doc:name="Audit Process Entry" doc:id="871609ca-4bc4-4645-831d-857c948066ed" name="audit-process-entry-sub-flow"/>
-		<until-successful maxRetries="${retry.attempts}" doc:name="Until Successful" doc:id="717bf78a-5d8a-4aa8-af06-11230511a2ba" millisBetweenRetries="${retry.frequency}">
-			<logger level="INFO" doc:name="Logger" doc:id="37003824-fda9-4f8d-860a-fac1e64422e9" message="#[payload]" />
-		</until-successful>
+		<until-successful maxRetries="${retry.attempts}" doc:name="Until Successful" doc:id="c495d515-a1da-4a77-82c4-4e1d15cb452b" millisBetweenRetries="${retry.frequency}">
+			<http:request method="PUT" doc:name="Invoke Mock API" doc:id="c7ac7b00-2584-467a-b113-c2dc764004ef" path="${mock.path}" sendCorrelationId="ALWAYS" outputMimeType="application/json" config-ref="s_mock_Http_Request_configuration">
+				<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Transaction-Id" : vars.transactionId,
+	"client_secret" : p('calm2.client_secret'),
+	"X-CustCode" : "wqe124",
+	"Transaction-Start-Time" : vars.transactionStartTime,
+	"X-ErpAccountNumber" : "1234",
+	"client_id" : p('calm2.client_id')
+}]]]></http:headers>				
+			
+
+</http:request>
+					
+
+</until-successful>
 		<ee:transform doc:name="Response Payload" doc:id="c12c7c73-377b-4d88-904c-41943c59bc49" >
 			<ee:message >
 				<ee:set-payload resource="dwl/build-api-response.dwl" />

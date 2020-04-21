@@ -24,4 +24,8 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 	<configuration doc:name="Configuration" doc:id="ccd0dfeb-950a-4ddd-b570-30795de8909d" defaultErrorHandler-ref="GlobalExceptionStrategy" />
 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="c0bd532a-b394-48b7-9373-888cc10ee8d3" file="properties/${mule.env}-properties.yaml" key="${encryption.key}" />
 	<global-property doc:name="Global Property" doc:id="9b14518b-433a-4b24-b532-bf452127c4d5" name="mule.env" value="dev" />
+	 <http:request-config name="s_mock_Http_Request_configuration" doc:name="HTTP_S_CALM2_Request_configuration" doc:id="2c921702-7acd-41e5-a4c3-c24d5f2f24ef" basePath="${mock.basePath}" responseTimeout="180000">
+		<http:request-connection host="${mock.host}" port="${mock.port}" />
+
+	</http:request-config>
 </mule>

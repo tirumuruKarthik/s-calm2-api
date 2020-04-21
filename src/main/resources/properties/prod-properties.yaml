@@ -1,16 +1,8 @@
 http:
-  host: "localhost"
-  port: "8081"
   basePath: "/api/v1/*"
+  host: "0.0.0.0"
+  port: "8081"
   consolePath: "/console/*"
-
-mock:
-  host: "localhost"
-  port: "8082"
-  basePath: "/api"
-  path: "/calm2"
-  client_id: "123"
-  client_secret: "123"    
   
 api:
   discovery:
@@ -32,8 +24,8 @@ smtp:
 db:
  audit: 
   config:
-   host: "127.0.0.1"
+   host: "db-audit-demo.czox2kq9otxp.eu-west-1.rds.amazonaws.com"
    port: "3306"
-   user: "![4FD9vbpL6xysKHNhc3MIqA==]"
-   password: "![0k/kt1o6JMLJgAY1kk+HhA==]"
-   database: "sys"    
+   user: "![SMja/nV+bgct1YakjpE9Dw==]"
+   password: "![s+9bS/QnD6wOPefrjUqlhA==]"
+   database: "sys"     
