@@ -1,6 +1,7 @@
 http:
   host: "localhost"
   port: "8081"
+  basePath: "/api/v1/*"
   consolePath: "/console/*"
   
 api:
@@ -23,8 +24,8 @@ smtp:
 db:
  audit: 
   config:
-   host: "db-audit-demo.czox2kq9otxp.eu-west-1.rds.amazonaws.com"
+   host: "127.0.0.1"
    port: "3306"
-   user: "![SMja/nV+bgct1YakjpE9Dw==]"
-   password: "![s+9bS/QnD6wOPefrjUqlhA==]"
-   database: "sys"     
+   user: "![4FD9vbpL6xysKHNhc3MIqA==]"
+   password: "![0k/kt1o6JMLJgAY1kk+HhA==]"
+   database: "sys"    

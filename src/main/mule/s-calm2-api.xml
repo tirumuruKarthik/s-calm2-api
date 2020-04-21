@@ -7,7 +7,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		</apikit:flow-mappings>
 	</apikit:config>
     <flow name="s-calm2-api-main">
-        <http:listener config-ref="s-calm2-api-httpListenerConfig" path="/api/*">
+        <http:listener config-ref="s-calm2-api-httpListenerConfig" path="${http.basePath}">
             <http:response statusCode="#[vars.httpStatus default 200]">
                 <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:response>
