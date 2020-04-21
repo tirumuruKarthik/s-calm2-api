@@ -27,11 +27,11 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 ---
 {
 	"Transaction-Id" : vars.transactionId,
-	"client_secret" : p('mock.client_secret'),
+	"client_secret" : p('calm2.client_secret'),
 	"X-CustCode" : "wqe124",
 	"Transaction-Start-Time" : vars.transactionStartTime,
 	"X-ErpAccountNumber" : "1234",
-	"client_id" : p('mock.client_id')
+	"client_id" : p('calm2.client_id')
 }]]]></http:headers>				
 			
 
