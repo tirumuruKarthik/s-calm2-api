@@ -2,12 +2,12 @@
 type: object
 displayName: customer
 properties:
-  legacy-customer-code?: string
-  account-number?: string
-  customer-contact?:
+  legacyCustomerCode?: string
+  accountNumber?: string
+  customerContact?:
     displayName: customer contact details
     type: !include contact.raml
-  organisation-name?: string
-  customer-address?:
+  organisationName?: string
+  customerAddress?:
     displayName: customer address details
     type: !include address.raml

@@ -1,17 +1,17 @@
 #%RAML 1.0 DataType
 type: object
-displayName: orderitem
+displayName: orderLine
 properties:
-  order-line-id?: string
+  orderLineId?: string
   order?:
     displayName: order details
     type: !include order.raml
   product?: 
     displayName: customer details
     type: !include product.raml
-  charging-type?: string
-  shipping-address?: string
-  chargingplan?: 
+  chargingType?: string
+  shippingAddress?: string
+  chargingPlan?: 
     displayName: charging plan details
     type: !include chargingplan.raml
   

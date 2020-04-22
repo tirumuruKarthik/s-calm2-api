@@ -65,5 +65,5 @@ error:
       execute: "Script execution error"
       unknown: "Script unknown engine error"
       
-calm2;
-  auth: abc-345-djr-865
+calm2:
+  auth: "abc-345-djr-865"

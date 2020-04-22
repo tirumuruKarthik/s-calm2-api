@@ -2,26 +2,26 @@
 output application/json
 ---
 {
-	"orderline": payload.orderline map (item , index) -> {
-		erpOrderLineId : item."order-line-id",
+	"orderLine": payload.orderLine map (item , index) -> {
+		erpOrderLineId : item."orderLineId",
 		order: {
-			erpOrderId: item.order."order-id",
-			erpOrderDate: item.order."ordered-date"
+			erpOrderId: item.order."orderId",
+			erpOrderDate: item.order."orderDate"
 		},
 		product: {
-			productCode: item.product."legacy-product-code"
+			productCode: item.product."productCode"
 		},
 		chargingPlan: {
-			startDate: item.chargingplan."contract-start-date",
-			endDate: item.chargingplan."contract-end-date",
-			unitType: item.chargingplan."unit-of-sale",
-			unitsBought: item.chargingplan."units-of-sale-amount",
-			feeType: item.chargingplan."fee-type",
-			productVersionList: item.chargingplan."product-version-list",
-			usageReportingSystem: item.chargingplan."usage-reporting-system"
+			startDate: item.chargingplan."startDate",
+			endDate: item.chargingplan."endDate",
+			unitType: item.chargingplan."unitType",
+			unitsBought: item.chargingplan."unitsBought",
+			feeType: item.chargingplan."feeType",
+			productVersionList: item.chargingplan."productVersionList",
+			usageReportingSystem: item.chargingplan."usageReportingSystem"
 		}
 	},
 	customer: payload.customer map (cust, custIndex) ->{
-		custName: cust."organisation-name"
+		custName: cust."companyName"
 	}
 }
