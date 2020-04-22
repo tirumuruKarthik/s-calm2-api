@@ -1,0 +1,53 @@
+{
+	"orderLine": [{
+		"orderLineId": "2875",
+		"order": {
+			"orderId": "12",
+			"orderDate": "2019-10-03",
+			"orderStatus": "Active",
+			"salesContact": "abc@xyz.com"
+		},
+		"product": {
+			"itemName": "12",
+			"versioning": "1.0",
+			"productCode": "123",
+			"commercialName": "",
+			"itemClass": "",
+			"status": "",
+			"comments": "Product Details"
+		},
+		"chargingType": "GBP",
+		"shippingAddress": "en-gb",
+		"chargingplan": {
+			"startDate": "2019-10-03",
+			"endDate": "2020-10-02",
+			"unitType": "C",
+			"unitsBought": 0,
+			"feeType": "R",
+			"productVersionList": "",
+			"usageReportingSystem": false
+		}
+	}],
+	"customer": [{
+		"legacyCustomerCode": "",
+		"accountNumber": "1234567891",
+		"contact": {
+			"name": "John",
+			"email": "abc@xyz.com",
+			"customer": ""
+		},
+		"companyName": "Org1",
+		"customeraddress": {
+			"customerAddress": "",
+			"address": "",
+			"addressLine2": "",
+			"addressLine3?": "",
+			"addressLine4?": "",
+			"city?": "London",
+			"state?": "",
+			"postalCode?": "",
+			"country?": "UK"
+		}
+	}],
+	"licenseFactory": "CALM2"
+}

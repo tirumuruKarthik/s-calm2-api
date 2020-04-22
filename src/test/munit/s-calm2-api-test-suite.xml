@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="s-calm2-api-test-suite.xml" />
+	<munit:test name="s-calm2-api-test-suite-put:\erpOrderLines\(erpOrderId)\(erpOrderLineId):application\json:s-calm2-api-configTest" doc:id="29dc7c60-9a83-456f-ae0b-2d9aa66ba44d" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="82659a5b-cb13-43c6-a4e1-ef876f04693e" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Invoke CALM2 API" attributeName="doc:name" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<set-payload value="#[MunitTools::getResourceAsString('sample_data/s-calm2-api-test')]" doc:name="Set Payload" doc:id="cedcc1c4-38bb-41a6-825f-51b0d58baab0" />
+			<flow-ref doc:name="Flow-ref to put:\erpOrderLines\(erpOrderId)\(erpOrderLineId):application\json:s-calm2-api-config" doc:id="9092a1b4-033e-40db-bd6b-685d4f4a3a89" name="put:\erpOrderLines\(erpOrderId)\(erpOrderLineId):application\json:s-calm2-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="a69f8252-b8d2-467b-9f66-b54188d7c9c9" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

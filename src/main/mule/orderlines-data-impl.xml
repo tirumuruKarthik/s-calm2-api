@@ -28,12 +28,10 @@ output application/json
 }]]></ee:set-variable>
 			</ee:variables>
 		</ee:transform>
-		<logger level="INFO" doc:name="Logger" doc:id="0b824bed-1cd5-488f-926b-80cf05dfe039" message="#[payload]"/>
 		<flow-ref doc:name="Log Process Entry" doc:id="3ee01fa3-7176-43ad-8d9c-0bf0370803cc" name="log-process-entry-sub-flow"/>
 		<flow-ref doc:name="Audit Process Entry" doc:id="871609ca-4bc4-4645-831d-857c948066ed" name="audit-process-entry-sub-flow"/>
-		<until-successful maxRetries="${retry.attempts}" doc:name="Until Successful" doc:id="c495d515-a1da-4a77-82c4-4e1d15cb452b" millisBetweenRetries="${retry.frequency}">
-			<http:request method="PUT" doc:name="Invoke CALM2 API" doc:id="c7ac7b00-2584-467a-b113-c2dc764004ef" path="${calm2.path}" sendCorrelationId="ALWAYS" outputMimeType="application/json" config-ref="S_CALM2_Http_Request_configuration">
-				<http:headers ><![CDATA[#[output application/java
+		<http:request method="PUT" doc:name="Invoke CALM2 API" doc:id="c7ac7b00-2584-467a-b113-c2dc764004ef" path="${calm2.path}" sendCorrelationId="ALWAYS" outputMimeType="application/json" config-ref="S_CALM2_Http_Request_configuration">
+				<http:headers><![CDATA[#[output application/java
 ---
 {
 	"Transaction-Id" : vars.transactionId,
@@ -47,16 +45,6 @@ output application/json
 			
 
 </http:request>
-					
-
-</until-successful>
-		<ee:transform doc:name="Response Payload" doc:id="c12c7c73-377b-4d88-904c-41943c59bc49" >
-			<ee:message >
-				<ee:set-payload resource="dwl/build-api-response.dwl" />
-			</ee:message>
-			<ee:variables >
-			</ee:variables>
-		</ee:transform>
 		<flow-ref doc:name="Audit Process Exit" doc:id="cdeea9f8-7a2b-4a1d-bd85-0aa78f9ca307" name="audit-process-exit-sub-flow"/>
 		<flow-ref doc:name="Log Process Exit" doc:id="26dc9598-1833-4427-84e4-ad08d95e0fe7" name="log-process-exit-sub-flow"/>
 	</sub-flow>
