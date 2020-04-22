@@ -30,22 +30,45 @@ output application/json
 		</ee:transform>
 		<flow-ref doc:name="Log Process Entry" doc:id="3ee01fa3-7176-43ad-8d9c-0bf0370803cc" name="log-process-entry-sub-flow"/>
 		<flow-ref doc:name="Audit Process Entry" doc:id="871609ca-4bc4-4645-831d-857c948066ed" name="audit-process-entry-sub-flow"/>
-		<http:request method="PUT" doc:name="Invoke CALM2 API" doc:id="c7ac7b00-2584-467a-b113-c2dc764004ef" path="${calm2.path}" sendCorrelationId="ALWAYS" outputMimeType="application/json" config-ref="S_CALM2_Http_Request_configuration">
+		<until-successful maxRetries="${retry.attempts}" doc:name="Until Successful" doc:id="98310f4c-6eee-481a-841c-c72320bd6074" millisBetweenRetries="${retry.frequency}">
+		<try doc:name="Try" doc:id="4fff79b9-e14a-44fb-9913-c45ec7a188fd">
+				
+				<http:request method="PUT" doc:name="Invoke CALM2 API" doc:id="c7ac7b00-2584-467a-b113-c2dc764004ef" path="${calm2.path}" sendCorrelationId="ALWAYS" outputMimeType="application/json" config-ref="S_CALM2_Http_Request_configuration">
 				<http:headers><![CDATA[#[output application/java
 ---
 {
 	"Transaction-Id" : vars.transactionId,
 	"client_secret" : p('calm2.client_secret'),
-	"Authorization" : p('calm2.auth'),
+	"Authorization" : attributes.headers.authorization,
 	"X-CustCode" : vars.header.custCode,
 	"Transaction-Start-Time" : vars.transactionStartTime,
 	"X-ErpAccountNumber" : vars.header.accountNumber,
 	"client_id" : p('calm2.client_id')
-}]]]></http:headers>				
-			
+}]]]></http:headers>
 
 </http:request>
-		<flow-ref doc:name="Audit Process Exit" doc:id="cdeea9f8-7a2b-4a1d-bd85-0aa78f9ca307" name="audit-process-exit-sub-flow"/>
+			<error-handler>
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="58c09513-e72e-4f54-a35b-21813991b79e" type="ANY">
+					<set-variable value="#[error.errorMessage.attributes['statusCode']]" doc:name="Set Variable httpStatusCode" doc:id="af0f70dc-6d7a-41aa-bb3f-fb97c001f128" variableName="httpStatusCode" />
+					<set-variable value="#['errors.calm2.response.status.' ++ vars.httpStatusCode]" doc:name="Set Variable Error Msg" doc:id="49863c7d-e6be-4ee8-a0de-da9f9aa9ae5b" variableName="errorMsg"/>
+					<set-variable value="#[p(vars.errorMsg)]" doc:name="Set Variable httpStatusMsg" doc:id="79ddd253-d516-448b-8ed4-4e48c9563816" variableName="httpStatusMsg"/>
+					<ee:transform doc:name="Response Error Message" doc:id="695ebe44-a0ae-44d0-92c2-3be2571588d6">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    "responseCode": vars.httpStatusCode,
+    "responseText":  vars.httpStatusMsg
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+					</on-error-continue>
+				</error-handler>
+		</try>
+		</until-successful>
+		<flow-ref doc:name="Audit Process Exit" doc:id="cdeea9f8-7a2b-4a1d-bd85-0aa78f9ca307" name="audit-process-exit-sub-flow" />
 		<flow-ref doc:name="Log Process Exit" doc:id="26dc9598-1833-4427-84e4-ad08d95e0fe7" name="log-process-exit-sub-flow"/>
 	</sub-flow>
 </mule>
