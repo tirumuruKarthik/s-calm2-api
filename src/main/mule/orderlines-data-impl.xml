@@ -18,6 +18,15 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 			<ee:message >
 				<ee:set-payload resource="dwl/calm2-request-payload.dwl" />
 			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="header" ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	custCode: payload.customer.legacyCustomerCode,
+	accountNumber: payload.customer.customerCode
+}]]></ee:set-variable>
+			</ee:variables>
 		</ee:transform>
 		<flow-ref doc:name="Log Process Entry" doc:id="3ee01fa3-7176-43ad-8d9c-0bf0370803cc" name="log-process-entry-sub-flow"/>
 		<flow-ref doc:name="Audit Process Entry" doc:id="871609ca-4bc4-4645-831d-857c948066ed" name="audit-process-entry-sub-flow"/>
@@ -28,9 +37,10 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 {
 	"Transaction-Id" : vars.transactionId,
 	"client_secret" : p('calm2.client_secret'),
-	"X-CustCode" : "wqe124",
+	"Authorization" : p('calm2.auth'),
+	"X-CustCode" : vars.header.custCode,
 	"Transaction-Start-Time" : vars.transactionStartTime,
-	"X-ErpAccountNumber" : "1234",
+	"X-ErpAccountNumber" : vars.header.accountNumber,
 	"client_id" : p('calm2.client_id')
 }]]]></http:headers>				
 			
