@@ -9,29 +9,36 @@ uses:
   resourceTypesLib: exchange_modules/600fe2e7-d5ea-4266-abb3-7fb67efb9c53/resourcetypeslibrary/1.0.0/resourcetypeslibrary.raml
   traitsLib: exchange_modules/600fe2e7-d5ea-4266-abb3-7fb67efb9c53/traitslibrary/1.0.0/traitslibrary.raml
   
-/erpOrderLines/{erpOrderId}/{erpOrderLineId}:  
+/erpOrderLines:
   description: |
-        Resource to update order line fulfilment status coming from Orcle-ERP System based on order id an order line id.
-  type:
-    resourceTypesLib.member:
-  is: [traitsLib.traceable: {required: true}, traitsLib.secured: {required: true}]
-  put:
+        Resource to update order line fulfilment status coming from Orcle-ERP System based on order id and order line id.
+  /{erpOrderId}:
     description: |
-      Post order line updates to CALM2 system
-    headers:
-      ERP-Account-Number:
-        type: string
-        description: ERP account number              
-    body:
-      application/json:
-        example: !include examples/update-order-lines.raml
-        properties:
-          orderLine: dataTypesLib.orderLine
-          customer: dataTypesLib.customer
-          licenseFactory: dataTypesLib.licenseFactory
-    responses:
-      200:
+        ERP Order identifier 
+    /{erpOrderLineId}:  
+      description: |
+        ERP Order line identifier; with erpOrderId and X-ErpAccountNumber, uniquely identifies an ERP Order line
+      type:
+        resourceTypesLib.member:
+      is: [traitsLib.traceable: {required: true}, traitsLib.secured: {required: true}]
+      put:
+        description: |
+          Upsert orderline to target system. e.g CALM2
+        headers:
+          ERP-Account-Number:
+            type: string
+            description: |
+              Legacy Navision or other system customer code, aka Navision account number or Reference for existing customer or new ERP customer code. Specifies the customer for ALAs. Must match the Connect Account for CLAs             
         body:
           application/json:
-            example: |
-                  { "responseCode" : 0,  "responseText" : "success"}
+            example: !include examples/update-order-lines.raml
+            properties:
+              orderLine: dataTypesLib.orderLine
+              customer: dataTypesLib.customer
+              licenseFactory: dataTypesLib.licenseFactory
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                      { "responseCode" : 0,  "responseText" : "success"}
