@@ -41,12 +41,12 @@
 			"customerAddress": "",
 			"address": "",
 			"addressLine2": "",
-			"addressLine3?": "",
-			"addressLine4?": "",
-			"city?": "London",
-			"state?": "",
-			"postalCode?": "",
-			"country?": "UK"
+			"addressLine3": "",
+			"addressLine4": "",
+			"city": "London",
+			"state": "",
+			"postalCode": "",
+			"country": "UK"
 		}
 	}],
 	"licenseFactory": "CALM2"

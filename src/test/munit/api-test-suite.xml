@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<munit:config name="api-test-suite.xml" />
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="938465e2-6853-4f9e-929c-30782e3f2869" basePath="/api/v1" >
+		<http:request-connection host="localhost" port="8081" />
+	</http:request-config>
+	<munit:test name="api-test-suiteTest" doc:id="d8da5081-6e6d-4a5f-aba8-b5d0649da131" expectedErrorType="ANY">
+		<munit:execution >
+			<http:request method="POST" doc:name="Request" doc:id="9d5027af-9194-4a69-8a88-34fc41768b49" config-ref="HTTP_Request_configuration" path="/erpOrderLines/{erpOrderId}/{erpOrderLineId}">
+				<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Transaction-Id" : "123",
+	"client_secret" : "123",
+	"Authorization" : "1234",
+	"Transaction-Start-Time" : "2018-08-02T16:58:12.121Z",
+	"client_id" : "123",
+	"ERP-Account-Number" : "Pe124"
+}]]]></http:headers>
+				<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"erpOrderId" : "1234",
+	"erpOrderLineId" : "1234"
+}]]]></http:uri-params>
+			</http:request>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="0b21fb6d-058e-4252-b648-fabfa1d196cb" expression="#[attributes.httpStatus]" is="#[MunitTools::equalTo(405)]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

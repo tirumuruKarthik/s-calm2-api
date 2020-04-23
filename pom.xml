@@ -117,12 +117,12 @@
 			<version>1.0.0-SNAPSHOT</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
-		<dependency>
-			<groupId>com.mulesoft.connectors</groupId>
-			<artifactId>mule-cloudhub-connector</artifactId>
-			<version>1.0.1</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
+	    <dependency>
+            <groupId>com.mulesoft.connectors</groupId>
+            <artifactId>mule-cloudhub-connector</artifactId>
+            <version>1.0.1</version>
+            <classifier>mule-plugin</classifier>
+        </dependency> 
 		<dependency>
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-db-connector</artifactId>
