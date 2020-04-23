@@ -7,6 +7,14 @@ http:
 api:
   discovery:
     id: ""
+    
+calm2:
+  host: "mule-worker-internal-uat-calm2-mock-api-ir1-cloudhub.io"
+  port: "8091"
+  basePath: "/api"
+  path: "/calm2"
+  client_id: "123"
+  client_secret: "123"    
 
 #----Common Block---No change Needed----           
 cloudhub:

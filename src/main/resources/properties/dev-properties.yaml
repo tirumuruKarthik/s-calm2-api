@@ -5,8 +5,8 @@ http:
   consolePath: "/console/*"
   
 calm2:
-  host: "0.0.0.0"
-  port: "8082"
+  host: "mule-worker-internal-dev-calm2-mock-api-ir1-cloudhub.io"
+  port: "8091"
   basePath: "/api"
   path: "/calm2"
   client_id: "123"

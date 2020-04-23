@@ -6,12 +6,20 @@ http:
   
 api:
   discovery:
-    id: ""
+    id: "16117448"
 
 #----Common Block---No change Needed----           
 cloudhub:
   username: ""
   password: ""
+  
+calm2:
+  host: "mule-worker-internal-qa-calm2-mock-api-ir1-cloudhub.io"
+  port: "8091"
+  basePath: "/api"
+  path: "/calm2"
+  client_id: "123"
+  client_secret: "123"  
   
 smtp:
   host: ""

@@ -14,7 +14,7 @@ calm2:
   
 api:
   discovery:
-    id: ""
+    id: "123"
 
 #----Common Block---No change Needed----           
 cloudhub:
