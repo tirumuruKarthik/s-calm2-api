@@ -63,6 +63,12 @@ output application/json
 }
 ]]></ee:set-payload>
 			</ee:message>
+							<ee:variables >
+								<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
+output application/java
+---
+vars.httpStatusCode]]></ee:set-variable>
+							</ee:variables>
 		</ee:transform>
 					</on-error-continue>
 				</error-handler>
