@@ -17,9 +17,7 @@ flow:
     undefined: "Flow Name not Defined"
 
 response:
-  timeout:
-    process:
-      webOrders: "60000"
+  timeout: "180000"
 
 retry:
   frequency: "2000"
