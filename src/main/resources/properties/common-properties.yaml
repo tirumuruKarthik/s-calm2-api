@@ -1,9 +1,9 @@
 is: 
   audit:
-    toggle: "OFF"
-    payload: "OFF"
+    toggle: "ON"
+    payload: "ON"
     details:
-      toggle: "OFF"
+      toggle: "ON"
   logging:
     toggle: "OFF"
 
@@ -21,5 +21,11 @@ retry:
       
 calm2:
   auth: "abc-345-djr-865"
+  
+db:
+  pool:
+    size:
+      max: "35"
+      min: "13"  
   
   

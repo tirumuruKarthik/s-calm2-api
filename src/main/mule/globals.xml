@@ -15,8 +15,10 @@ http://www.mulesoft.org/schema/mule/cloudhub http://www.mulesoft.org/schema/mule
 	<http:listener-config name="s-calm2-api-httpListenerConfig">
         <http:listener-connection host="${http.host}" port="${http.port}" />
     </http:listener-config>	
-    <db:config name="Database_Config" doc:name="Database Config" doc:id="235bfdb2-fdbf-4648-94d0-04d209ee4664" >
-		<db:my-sql-connection host="${db.audit.config.host}" port="${db.audit.config.port}" user="${secure::db.audit.config.user}" password="${secure::db.audit.config.password}" database="${db.audit.config.database}" />
+    <db:config name="Database_Config" doc:name="Database Config" doc:id="14513c06-7892-4e6a-857e-4199a5fca6fc" >
+		<db:mssql-connection host="${db.audit.config.host}" user="${secure::db.audit.config.user}" password="${secure::db.audit.config.password}" databaseName="${db.audit.config.database}" port="${db.audit.config.port}">
+			<db:pooling-profile maxPoolSize="${db.pool.size.max}" minPoolSize="${db.pool.size.min}" />
+		</db:mssql-connection>
 	</db:config>
 	<import doc:name="Import" doc:id="41133f26-6fea-4bb8-8634-35a5d49b6143" file="common-auditing-framework.xml" />
 	<import doc:name="Import" doc:id="2bd29da3-084d-4cf1-896d-cc8309a98de2" file="common-logging-framework.xml" />

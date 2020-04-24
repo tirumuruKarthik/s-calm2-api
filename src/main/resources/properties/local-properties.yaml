@@ -32,8 +32,8 @@ smtp:
 db:
  audit: 
   config:
-   host: "127.0.0.1"
-   port: "3306"
-   user: "![4FD9vbpL6xysKHNhc3MIqA==]"
-   password: "![0k/kt1o6JMLJgAY1kk+HhA==]"
-   database: "sys"    
+   host: "mastek-db-service.database.windows.net"
+   port: "1433"
+   user: "![zyhAtvykYzLluT/msxeadEffkC2eJ4BLJ4vTlWLugFw=]"
+   password: "![6WuGjnUC9I3aTskMvhD/Lg==]"
+   database: "MASTEK-DB"
