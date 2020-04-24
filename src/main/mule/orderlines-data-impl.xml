@@ -50,7 +50,7 @@ output application/json
 			<error-handler>
 					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="58c09513-e72e-4f54-a35b-21813991b79e" type="ANY">
 					<set-variable value="#[error.errorMessage.attributes['statusCode']]" doc:name="Set Variable httpStatusCode" doc:id="af0f70dc-6d7a-41aa-bb3f-fb97c001f128" variableName="httpStatusCode" />
-					<set-variable value="#['errors.calm2.response.status.' ++ vars.httpStatusCode default 500]" doc:name="Set Variable Error Msg" doc:id="49863c7d-e6be-4ee8-a0de-da9f9aa9ae5b" variableName="errorMsg"/>
+					<set-variable value="#['errors.calm2.response.status.' ++ vars.httpStatusCode]" doc:name="Set Variable Error Msg" doc:id="49863c7d-e6be-4ee8-a0de-da9f9aa9ae5b" variableName="errorMsg"/>
 					<set-variable value="#[p(vars.errorMsg)]" doc:name="Set Variable httpStatusMsg" doc:id="79ddd253-d516-448b-8ed4-4e48c9563816" variableName="httpStatusMsg"/>
 					<ee:transform doc:name="Response Error Message" doc:id="695ebe44-a0ae-44d0-92c2-3be2571588d6">
 			<ee:message>

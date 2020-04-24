@@ -1,6 +1,8 @@
 {
 	"minMuleVersion": "4.2.1",
 	"secureProperties": [
-		"encryption.key"
+		"encryption.key",
+		"db.audit.config.user",
+		"db.audit.config.password"
 	]
 }

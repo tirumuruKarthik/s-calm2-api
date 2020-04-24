@@ -14,8 +14,8 @@ cloudhub:
   password: ""
   
 calm2:
-  host: "mule-worker-internal-qa-calm2-mock-api-ir1-cloudhub.io"
-  port: "8091"
+  host: "qa-calm2-mock-api.uk-e1.cloudhub.io"
+  port: "80"
   basePath: "/api"
   path: "/calm2"
   client_id: "123"
