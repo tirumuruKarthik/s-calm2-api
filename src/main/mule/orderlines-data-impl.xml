@@ -14,12 +14,14 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 				<ee:set-variable variableName="flowName" resource="dwl/set-variables.dwl"></ee:set-variable>
 			</ee:variables>
 		</ee:transform>
-		<ee:transform doc:name="Request Payload For S CALM2" doc:id="55acd0d4-f72f-455c-9cbb-8377eda8f382" >
-			<ee:message >
+		<flow-ref doc:name="Log Process Entry" doc:id="3ee01fa3-7176-43ad-8d9c-0bf0370803cc" name="log-process-entry-sub-flow"/>
+		<flow-ref doc:name="Audit Process Entry" doc:id="871609ca-4bc4-4645-831d-857c948066ed" name="audit-process-entry-sub-flow"/>
+		<ee:transform doc:name="Request Payload For S CALM2" doc:id="55acd0d4-f72f-455c-9cbb-8377eda8f382">
+			<ee:message>
 				<ee:set-payload resource="dwl/calm2-request-payload.dwl" />
 			</ee:message>
-			<ee:variables >
-				<ee:set-variable variableName="header" ><![CDATA[%dw 2.0
+			<ee:variables>
+				<ee:set-variable variableName="header"><![CDATA[%dw 2.0
 output application/json
 ---
 {
@@ -28,12 +30,10 @@ output application/json
 }]]></ee:set-variable>
 			</ee:variables>
 		</ee:transform>
-		<flow-ref doc:name="Log Process Entry" doc:id="3ee01fa3-7176-43ad-8d9c-0bf0370803cc" name="log-process-entry-sub-flow"/>
-		<flow-ref doc:name="Audit Process Entry" doc:id="871609ca-4bc4-4645-831d-857c948066ed" name="audit-process-entry-sub-flow"/>
 		<until-successful maxRetries="${retry.attempts}" doc:name="Until Successful" doc:id="98310f4c-6eee-481a-841c-c72320bd6074" millisBetweenRetries="${retry.frequency}">
 		<try doc:name="Try" doc:id="4fff79b9-e14a-44fb-9913-c45ec7a188fd">
 				
-				<http:request method="PUT" doc:name="Invoke CALM2 API" doc:id="c7ac7b00-2584-467a-b113-c2dc764004ef" path="${calm2.path}" sendCorrelationId="ALWAYS" outputMimeType="application/json" config-ref="S_CALM2_Http_Request_configuration">
+				<http:request method="PUT" doc:name="Invoke CALM2 Mock API" doc:id="c7ac7b00-2584-467a-b113-c2dc764004ef" path="${calm2.path}" sendCorrelationId="ALWAYS" outputMimeType="application/json" config-ref="S_CALM2_Http_Request_configuration">
 				<http:headers><![CDATA[#[output application/java
 ---
 {
@@ -64,16 +64,13 @@ output application/json
 ]]></ee:set-payload>
 			</ee:message>
 							<ee:variables >
-								<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
-output application/java
----
-vars.httpStatusCode]]></ee:set-variable>
 							</ee:variables>
 		</ee:transform>
 					</on-error-continue>
 				</error-handler>
 		</try>
 		</until-successful>
+		<set-variable value="#[vars.apiName ++ &quot;: &quot; ++ 's-calm2-api-impl-sub-flow']" doc:name="Set Flow Name" doc:id="8f2bf621-4964-4052-a39a-27c3a4a39219" variableName="flowName"/>
 		<flow-ref doc:name="Audit Process Exit" doc:id="cdeea9f8-7a2b-4a1d-bd85-0aa78f9ca307" name="audit-process-exit-sub-flow" />
 		<flow-ref doc:name="Log Process Exit" doc:id="26dc9598-1833-4427-84e4-ad08d95e0fe7" name="log-process-exit-sub-flow"/>
 	</sub-flow>

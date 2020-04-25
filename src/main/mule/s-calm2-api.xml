@@ -53,7 +53,7 @@ attributes.uriParams.'erpOrderLineId']]></ee:set-variable>
 		</ee:transform>
 		<flow-ref doc:name="Log Receiver Entry" doc:id="a0385c4e-d1d3-4018-b4fa-9d38594e7e73" name="log-receiver-entry-sub-flow"/>
 		<flow-ref doc:name="Audit Receiver Entry" doc:id="10bf6e4c-f410-4021-a528-7c02c7dfb17e" name="audit-receiver-entry-sub-flow"/>
-		<flow-ref doc:name="S CALM2 API CALL" doc:id="f9aa349c-2074-45ae-a68f-8428be4e024e" name="s-calm2-api-impl-sub-flow"/>
+		<flow-ref doc:name="S CALM2 API Implementation" doc:id="f9aa349c-2074-45ae-a68f-8428be4e024e" name="s-calm2-api-impl-sub-flow"/>
 		<flow-ref doc:name="Audit Dispatcher Exit" doc:id="56f949ca-d050-4626-856a-346edc1e10a8" name="audit-dispatcher-exit-sub-flow" />
 		<flow-ref doc:name="Log Dispatcher Exit" doc:id="2077175e-7d64-4c8c-b3b9-447137a639fb" name="log-dispatcher-exit-sub-flow"/>
     </flow>
