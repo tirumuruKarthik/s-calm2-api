@@ -14,8 +14,11 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		<munit:behavior >
 			<munit-tools:mock-when doc:name="Mock when" doc:id="82659a5b-cb13-43c6-a4e1-ef876f04693e" processor="http:request">
 				<munit-tools:with-attributes >
-					<munit-tools:with-attribute whereValue="Invoke CALM2 API" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="Invoke CALM2 Mock API" attributeName="doc:name" />
 				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsString('sample_data/calm2-response.json')]" mediaType="application/json" />
+				</munit-tools:then-return>
 			</munit-tools:mock-when>
 		</munit:behavior>
 		<munit:execution >
@@ -39,54 +42,14 @@ output application/java
 	}
 }]]></ee:set-attributes>
 				</ee:message>
+				<ee:variables >
+				</ee:variables>
 			</ee:transform>
 			<set-payload value="#[MunitTools::getResourceAsString('sample_data/calm2-request.json')]" doc:name="Set Payload" doc:id="cedcc1c4-38bb-41a6-825f-51b0d58baab0" mimeType="application/json"/>
 			<flow-ref doc:name="Flow-ref to put:\erpOrderLines\(erpOrderId)\(erpOrderLineId):application\json:s-calm2-api-config" doc:id="9092a1b4-033e-40db-bd6b-685d4f4a3a89" name="put:\erpOrderLines\(erpOrderId)\(erpOrderLineId):application\json:s-calm2-api-config"/>
 		</munit:execution>
 		<munit:validation >
-			<munit-tools:assert-that doc:name="Assert that" doc:id="a69f8252-b8d2-467b-9f66-b54188d7c9c9" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
-		</munit:validation>
-	</munit:test>
-	
-	<munit:test name="s-calm2-api-test-suite-put:\erpOrderLines\(erpOrderId)\(erpOrderLineId):application\json:s-calm2-api-configTest-1" doc:id="50d24c06-9a7b-42d9-ada4-9d360c9850fd" description="Test">
-		<munit:behavior >
-			<munit-tools:mock-when doc:name="Mock when" doc:id="d0672595-4e0b-467c-aef4-ea9c58c4cbcc" processor="http:request">
-				<munit-tools:with-attributes >
-					<munit-tools:with-attribute whereValue="Invoke CALM2 API" attributeName="doc:name" />
-				</munit-tools:with-attributes>
-				<munit-tools:then-return >
-					<munit-tools:error typeId="HTTP:CONNECTIVITY" />
-				</munit-tools:then-return>
-			
-</munit-tools:mock-when>
-		</munit:behavior>
-		<munit:execution >
-			<ee:transform doc:name="Set Attributes" doc:id="e3266e53-fe56-40e7-bab8-e729352d82b6">
-				<ee:message>
-					<ee:set-attributes ><![CDATA[%dw 2.0
-output application/java
----
-{
-	headers: {
-		"client_id": "3ddbd94c96c04aa2a0febb7603e12r4c2",
-		"client_secret": "3ddbd94c96c04aa2a0febb7603e12r4c2",
-		"Transaction-Id": "2ddbd94c-96c0-4aa2-a0fe-bb7603ebca7c",
-		"Transaction-Start-Time": "2018-08-02T16:58:12.121Z",
-		"ERP-Account-Number": "Pe124",
-		"authorization": 1234,
-	},
-	uriParams: {
-		erpOrderId : 1234,
-		erpOrderLineId: 1234
-	}
-}]]></ee:set-attributes>
-				</ee:message>
-			</ee:transform>
-			<set-payload value="#[MunitTools::getResourceAsString('sample_data/calm2-request.json')]" doc:name="Set Payload" doc:id="fad83f5f-5ec1-4763-9a14-df0e6df4d285" mimeType="application/json"/>
-			<flow-ref doc:name="Flow-ref to put:\erpOrderLines\(erpOrderId)\(erpOrderLineId):application\json:s-calm2-api-config" doc:id="42f98b6d-df14-455f-9e4d-20b49c5d3899" name="put:\erpOrderLines\(erpOrderId)\(erpOrderLineId):application\json:s-calm2-api-config"/>
-		</munit:execution>
-		<munit:validation >
-			<munit-tools:assert-that doc:name="Assert that" doc:id="4a10d839-ac02-4a2c-8178-8785be037359" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="542e74d7-cb05-4b5b-a509-6e1cf84c34af" actual="#[payload.responseText]" expected="#['success']"/>
 		</munit:validation>
 	</munit:test>
 
