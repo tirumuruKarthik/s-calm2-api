@@ -1,0 +1,26 @@
+#%RAML 1.0 SecurityScheme
+description: |
+  OAuth2 is a protocol that lets external apps request authorization to private resource. This is
+  preferred over Basic Authentication because tokens can be limited to specific
+  types of data, and can be revoked by users at any time.
+type: OAuth 2.0
+describedBy: 
+  headers: 
+    Authorization: 
+      description: |
+        Used to send a valid OAuth 2 access token. Do not use together with
+        the "access_token" query string parameter.
+  queryParameters: 
+    access_token: 
+      description: |
+        Used to send a valid OAuth 2 access token. Do not use together with
+        the "Authorization" header
+  responses: 
+    404: 
+      description: Unauthorized
+settings: 
+  authorizationUri: https://identity.connect.aveva.com/identity/connect/authorize
+  accessTokenUri: https://identity.connect.aveva.com/identity/connect/token
+  authorizationGrants: [ authorization_code ]
+  scopes: 
+    - calm_erp

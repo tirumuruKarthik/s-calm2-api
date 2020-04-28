@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
-http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-    <apikit:config name="s-calm2-api-config" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" raml="api/s-calm2-api.raml">
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd  http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+   <apikit:config name="s-calm2-api-config" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" raml="api/s-calm2-api.raml">
 		<apikit:flow-mappings >
 			<apikit:flow-mapping resource="/erpOrderLines/{erpOrderId}/{erpOrderLineId}" action="put" content-type="application/json" flow-ref="put:\erpOrderLines\(erpOrderId)\(erpOrderLineId):application\json:s-calm2-api-config" />
 		</apikit:flow-mappings>
@@ -16,7 +15,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
                 <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:error-response>
         </http:listener>
-        <apikit:router config-ref="s-calm2-api-config" />
+        <apikit:router config-ref="s-calm2-api-config"/>
     </flow>
     <flow name="s-calm2-api-console">
         <http:listener config-ref="s-calm2-api-httpListenerConfig" path="/console/*">
@@ -28,33 +27,32 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
                 <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:error-response>
         </http:listener>
-        <apikit:console config-ref="s-calm2-api-config" />
+        <apikit:console config-ref="s-calm2-api-config"/>
     </flow>
     <flow name="put:\erpOrderLines\(erpOrderId)\(erpOrderLineId):application\json:s-calm2-api-config">
-        
-        <set-variable value="#['s-calm2-api']" doc:name="Set API Name" doc:id="f16847df-aa4c-4921-a9b6-91b941242419" variableName="apiName"/>
-		<ee:transform doc:name="Set Flow Name" doc:id="8b325808-1107-4323-bdcd-9b9e6ca1b5c2" >
-			<ee:message >
-			</ee:message>
-			<ee:variables >
-				<ee:set-variable variableName="flowName" ><![CDATA[%dw 2.0
+        <set-variable value="#['s-calm2-api']" doc:name="Set API Name" doc:id="f16847df-aa4c-4921-a9b6-91b941242419" variableName="apiName" />
+        <ee:transform doc:name="Set Flow Name" doc:id="8b325808-1107-4323-bdcd-9b9e6ca1b5c2">
+            <ee:message />
+            <ee:variables>
+                <ee:set-variable variableName="flowName"><![CDATA[%dw 2.0
 output application/java
 ---
 vars.apiName ++ ": " ++ 'put:\erpOrderLines\(erpOrderId)\(erpOrderLineId):application\json:s-calm2-api-config']]></ee:set-variable>
-				<ee:set-variable variableName="erpOrderId" ><![CDATA[%dw 2.0
+                <ee:set-variable variableName="erpOrderId"><![CDATA[%dw 2.0
 output application/java
 ---
 attributes.uriParams.'erpOrderId']]></ee:set-variable>
-				<ee:set-variable variableName="erpOrderLineId" ><![CDATA[%dw 2.0
+                <ee:set-variable variableName="erpOrderLineId"><![CDATA[%dw 2.0
 output application/java
 ---
 attributes.uriParams.'erpOrderLineId']]></ee:set-variable>
-			</ee:variables>
-		</ee:transform>
-		<flow-ref doc:name="Log Receiver Entry" doc:id="a0385c4e-d1d3-4018-b4fa-9d38594e7e73" name="log-receiver-entry-sub-flow"/>
-		<flow-ref doc:name="Audit Receiver Entry" doc:id="10bf6e4c-f410-4021-a528-7c02c7dfb17e" name="audit-receiver-entry-sub-flow"/>
-		<flow-ref doc:name="S CALM2 API Implementation" doc:id="f9aa349c-2074-45ae-a68f-8428be4e024e" name="s-calm2-api-impl-sub-flow"/>
-		<flow-ref doc:name="Audit Dispatcher Exit" doc:id="56f949ca-d050-4626-856a-346edc1e10a8" name="audit-dispatcher-exit-sub-flow" />
-		<flow-ref doc:name="Log Dispatcher Exit" doc:id="2077175e-7d64-4c8c-b3b9-447137a639fb" name="log-dispatcher-exit-sub-flow"/>
+            </ee:variables>
+        </ee:transform>
+        <flow-ref doc:name="Log Receiver Entry" doc:id="a0385c4e-d1d3-4018-b4fa-9d38594e7e73" name="log-receiver-entry-sub-flow" />
+        <flow-ref doc:name="Audit Receiver Entry" doc:id="10bf6e4c-f410-4021-a528-7c02c7dfb17e" name="audit-receiver-entry-sub-flow" />
+        <flow-ref doc:name="S CALM2 API Implementation" doc:id="f9aa349c-2074-45ae-a68f-8428be4e024e" name="s-calm2-api-impl-sub-flow" />
+        <flow-ref doc:name="Audit Dispatcher Exit" doc:id="56f949ca-d050-4626-856a-346edc1e10a8" name="audit-dispatcher-exit-sub-flow" />
+        <flow-ref doc:name="Log Dispatcher Exit" doc:id="2077175e-7d64-4c8c-b3b9-447137a639fb" name="log-dispatcher-exit-sub-flow" />
     </flow>
+    
 </mule>
