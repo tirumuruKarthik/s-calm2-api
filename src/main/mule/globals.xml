@@ -13,7 +13,7 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 http://www.mulesoft.org/schema/mule/cloudhub http://www.mulesoft.org/schema/mule/cloudhub/current/mule-cloudhub.xsd">
 	
 	<http:listener-config name="s-calm2-api-httpListenerConfig">
-        <http:listener-connection host="${http.host}" port="${http.port}" />
+        <http:listener-connection host="${http.host}" port="${http.private.port}" />
     </http:listener-config>	
     <db:config name="Database_Config" doc:name="Database Config" doc:id="14513c06-7892-4e6a-857e-4199a5fca6fc" >
 		<db:mssql-connection host="${db.audit.config.host}" user="${secure::db.audit.config.user}" password="${secure::db.audit.config.password}" databaseName="${db.audit.config.database}" port="${db.audit.config.port}">
