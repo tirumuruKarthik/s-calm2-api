@@ -3,14 +3,14 @@ usage: |
  library of datatypes to form domain driven model (Bounded Context) to be used by concerned APIs
 
 types:
+  order:
+    displayName: order line details
+    type: array
+    items: !include dataTypes//order.raml
   orderLine:
     displayName: order line details
     type: array
-    items: !include dataTypes//orderline.raml
-  customer: 
-    displayName: customer details
-    type: array
-    items: !include dataTypes//customer.raml
+    items: !include dataTypes//orderline.raml  
   licenseFactory: string
   statusId: number
   statusInfo: string

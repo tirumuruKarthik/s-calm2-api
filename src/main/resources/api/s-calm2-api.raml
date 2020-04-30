@@ -5,8 +5,8 @@ version: v1
 
 
 uses:
-  dataTypesLib: exchange_modules/600fe2e7-d5ea-4266-abb3-7fb67efb9c53/datatypeslibrary/1.0.0/datatypeslibrary.raml
-  resourceTypesLib: exchange_modules/600fe2e7-d5ea-4266-abb3-7fb67efb9c53/resourcetypeslibrary/1.0.0/resourcetypeslibrary.raml
+  dataTypesLib: exchange_modules/600fe2e7-d5ea-4266-abb3-7fb67efb9c53/datatypeslibrary/1.0.1/datatypeslibrary.raml
+  resourceTypesLib: exchange_modules/600fe2e7-d5ea-4266-abb3-7fb67efb9c53/resourcetypeslibrary/1.0.1/resourcetypeslibrary.raml
   traitsLib: exchange_modules/600fe2e7-d5ea-4266-abb3-7fb67efb9c53/traitslibrary/1.0.1/traitslibrary.raml
   
 /erpOrderLines:
@@ -20,7 +20,7 @@ uses:
         ERP Order line identifier; with erpOrderId and X-ErpAccountNumber, uniquely identifies an ERP Order line
       type:
         resourceTypesLib.member:
-      is: [traitsLib.traceable: {required: true}, traitsLib.secured: {required: true}]
+      is: [traitsLib.traceable: {required: true}]
       securedBy: [traitsLib.oauth_2_0]
       put:
         description: |
@@ -34,8 +34,8 @@ uses:
           application/json:
             example: !include examples/update-order-lines.raml
             properties:
-              orderLine: dataTypesLib.orderLine
-              customer: dataTypesLib.customer
+              order: dataTypesLib.order
+              orderLine: dataTypesLib.orderLine              
               licenseFactory: dataTypesLib.licenseFactory
         responses:
           200:

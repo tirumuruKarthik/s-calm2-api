@@ -3,11 +3,8 @@ type: object
 displayName: orderLine
 properties:
   orderLineId?: string
-  order?:
-    displayName: order details
-    type: !include order.raml
   product?: 
-    displayName: customer details
+    displayName: product details
     type: !include product.raml
   chargingType?: string
   shippingAddress?: string

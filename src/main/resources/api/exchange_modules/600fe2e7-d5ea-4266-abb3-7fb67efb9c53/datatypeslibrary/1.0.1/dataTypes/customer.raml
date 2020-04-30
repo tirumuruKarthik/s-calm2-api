@@ -4,12 +4,12 @@ displayName: customer
 properties:
   legacyCustomerCode?: string
   accountNumber?: string
+  type?: string
   customerContact?:
     displayName: customer contact details
     type: !include contact.raml
-  organisationName?: string
+  companyName?: string
   customerAddress?:
     displayName: customer address details
     type: !include address.raml
-  customerCode?: string
-  companyName?: string
+  telephone?: string

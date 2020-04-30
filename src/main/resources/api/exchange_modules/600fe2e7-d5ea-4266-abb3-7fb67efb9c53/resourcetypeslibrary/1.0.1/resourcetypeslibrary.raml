@@ -36,7 +36,7 @@ resourceTypes:
               example: |
                 { "response" : 0 }           
     put?:
-      is: [commonResponse.HTTP-200, commonResponse.HTTP-201, commonResponse.HTTP-204, commonResponse.HTTP-403, commonResponse.HTTP-404, commonResponse.HTTP-409]
+      is: [commonResponse.HTTP-200, commonResponse.HTTP-201, commonResponse.HTTP-404,commonResponse.HTTP-500, commonResponse.HTTP-501, commonResponse.HTTP-502, commonResponse.HTTP-504]
       description: This method is used to update the <<resourcePathName>>
       body: 
         application/json:
@@ -48,7 +48,7 @@ resourceTypes:
               example: |
                 { "response" : 0 }              
     get?:
-      is: [commonResponse.HTTP-200]
+      is: [commonResponse.HTTP-200, commonResponse.HTTP-500, commonResponse.HTTP-501, commonResponse.HTTP-502, commonResponse.HTTP-504]
       description: This method is used to get the a <<resourcePathName | !singularize>>
       responses: 
         200:
