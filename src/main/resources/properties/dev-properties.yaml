@@ -6,10 +6,9 @@ http:
   consolePath: "/console/*"
   
 calm2:
-  host: "dev-calm2-mock-api.uk-e1.cloudhub.io"
-  port: "80"
-  basePath: "/api"
-  path: "/calm2"
+  host: "calm.connect.aveva.com"
+  port: "443"
+  path: "/erpOrderLines"
   client_id: "123"
   client_secret: "123"
   

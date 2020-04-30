@@ -5,12 +5,11 @@ http:
   consolePath: "/console/*"
 
 calm2:
-  host: "localhost"
-  port: "8082"
-  basePath: "/api"
-  path: "/calm2"
+  host: "calm.connect.aveva.com"
+  port: "443"
+  path: "/erpOrderLines"
   client_id: "123"
-  client_secret: "123"    
+  client_secret: "123" 
   
 api:
   discovery:

@@ -16,8 +16,8 @@ response:
   timeout: "180000"
 
 retry:
-  frequency: "2000"
-  attempts: "3"
+  frequency: "90000"
+  attempts: "5"
       
 calm2:
   auth: "abc-345-djr-865"

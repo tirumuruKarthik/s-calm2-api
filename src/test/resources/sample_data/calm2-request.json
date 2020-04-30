@@ -1,53 +1,63 @@
 {
-	"orderLine": [{
-		"orderLineId": "2875",
-		"order": {
-			"orderId": "12",
-			"orderDate": "2019-10-03",
-			"orderStatus": "Active",
-			"salesContact": "abc@xyz.com"
-		},
-		"product": {
-			"itemName": "12",
-			"versioning": "1.0",
-			"productCode": "123",
-			"commercialName": "",
-			"itemClass": "",
-			"status": "",
-			"comments": "Product Details"
-		},
-		"chargingType": "GBP",
-		"shippingAddress": "en-gb",
-		"chargingplan": {
-			"startDate": "2019-10-03",
-			"endDate": "2020-10-02",
-			"unitType": "C",
-			"unitsBought": 0,
-			"feeType": "R",
-			"productVersionList": "",
-			"usageReportingSystem": false
-		}
-	}],
-	"customer": [{
-		"legacyCustomerCode": "",
-		"accountNumber": "1234567891",
-		"contact": {
-			"name": "John",
-			"email": "abc@xyz.com",
-			"customer": ""
-		},
-		"companyName": "Org1",
-		"customeraddress": {
-			"customerAddress": "",
-			"address": "",
-			"addressLine2": "",
-			"addressLine3": "",
-			"addressLine4": "",
-			"city": "London",
-			"state": "",
-			"postalCode": "",
-			"country": "UK"
-		}
-	}],
-	"licenseFactory": "CALM2"
+  "order": [
+    {
+      "orderId": "12",
+      "orderDate": "2020-04-29",
+      "customer": {
+        "legacyCustomerCode": "we-12-wd-34",
+        "accountNumber": "1234567891",
+        "type": "Marine",
+        "customerContact": {
+          "firstName": "John",
+          "lastName": "Smith",
+          "title": "Mr",
+          "email": "abc@xyz.com",
+          "telephone": "0446518947345",
+          "supportTeam": "def@xyz.com",
+          "role": "customer"
+        },
+        "companyName": "AVEVA",
+        "customerAddress": {
+          "id": "",
+          "address": "32A Stuart St",
+          "addressLine2": "Luton",
+          "addressLine3": "",
+          "addressLine4": "",
+          "city": "Luton",
+          "state": "",
+          "postalCode": "LU1",
+          "country": "UK"
+        },
+        "telephone": "0446518947345"
+      },
+      "orderStatus": "Active",
+      "salesContact": "abc@xyz.com"
+    }
+  ],
+  "orderLine": [
+    {
+      "orderLineId": "2875",
+      "product": {
+        "productCode": "V00FN161",
+        "versioning": "1.0",
+        "legacyProductCode": "we-34-dd",
+        "commercialName": "xyz",
+        "productClass": "class1",
+        "status": "Active",
+        "comments": "Product Details"
+      },
+      "chargingType": "GBP",
+      "shippingAddress": "en-gb",
+      "chargingPlan": {
+        "startDate": "2020-04-03",
+        "endDate": "2020-04-02",
+        "unitType": "C",
+        "unitsBought": 0,
+        "feeType": "R",
+        "productVersionList": "1.2, 1.3.4.SP1",
+        "usageReportingSystem": false
+      }
+    }
+  ],
+  "licenseFactory": "GB01CAM01"
 }

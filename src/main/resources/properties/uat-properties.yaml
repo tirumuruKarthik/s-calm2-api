@@ -8,12 +8,11 @@ http:
 api:
   discovery:
     id: ""
-    
+      
 calm2:
-  host: "uat-calm2-mock-api.uk-e1.cloudhub.io"
-  port: "80"
-  basePath: "/api"
-  path: "/calm2"
+  host: "calm.connect.aveva.com"
+  port: "443"
+  path: "/erpOrderLines"
   client_id: "123"
   client_secret: "123"    
 
