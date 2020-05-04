@@ -7,7 +7,7 @@
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<sub-flow name="s-calm2-api-impl-sub-flow" doc:id="86f745a4-cdc0-46b6-bdea-95ac04a3c1aa" >
-		<ee:transform doc:name="Set Variables" doc:id="c0e32b6d-4b4c-4dc4-82f3-0ec504333009" >
+		<ee:transform doc:name="Set Flow Name" doc:id="c0e32b6d-4b4c-4dc4-82f3-0ec504333009" >
 			<ee:message >
 			</ee:message>
 			<ee:variables >
@@ -30,9 +30,25 @@ output application/json
 }]]></ee:set-variable>
 			</ee:variables>
 		</ee:transform>
-		<until-successful maxRetries="${retry.attempts}" doc:name="Until Successful" doc:id="98310f4c-6eee-481a-841c-c72320bd6074" millisBetweenRetries="${retry.frequency}">
-		<try doc:name="Try" doc:id="4fff79b9-e14a-44fb-9913-c45ec7a188fd">
-			<http:request method="PUT" doc:name="Invoke CALM2 API" doc:id="c7ac7b00-2584-467a-b113-c2dc764004ef" path="${calm2.path}" sendCorrelationId="ALWAYS" outputMimeType="application/json" config-ref="S_CALM2_Http_Request_configuration">
+		
+		<flow-ref doc:name="Call CALM2 API" doc:id="9b21b538-8ecb-4c0f-8651-cc5960d139c8" name="orderlines-data-calm2-impl-sub-flow"/>
+		<set-variable value="#[vars.apiName ++ &quot;: &quot; ++ 's-calm2-api-impl-sub-flow']" doc:name="Set Flow Name" doc:id="8f2bf621-4964-4052-a39a-27c3a4a39219" variableName="flowName"/>
+		<flow-ref doc:name="Audit Process Exit" doc:id="cdeea9f8-7a2b-4a1d-bd85-0aa78f9ca307" name="audit-process-exit-sub-flow" />
+		<flow-ref doc:name="Log Process Exit" doc:id="26dc9598-1833-4427-84e4-ad08d95e0fe7" name="log-process-exit-sub-flow"/>
+	</sub-flow>
+	<sub-flow name="orderlines-data-calm2-impl-sub-flow" doc:id="cb6d90d4-10c0-4ce5-8ad8-fbf8864c8f52">
+	<ee:transform doc:name="Set Flow Name" doc:id="9b8782b5-58d9-4c27-b500-9b2f654a5906" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="flowName" resource="dwl/set-variables.dwl"></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="Log Process Entry" doc:id="581c1ae9-5434-4bf5-8af0-45c0b61788bf" name="log-process-entry-sub-flow"/>
+		<flow-ref doc:name="Audit Process Entry" doc:id="88b25d24-8114-4837-b893-fdfb4627ad02" name="audit-process-entry-sub-flow"/>
+		<until-successful maxRetries="${retry.attempts}" doc:name="Until Successful" doc:id="d10a56b5-1f66-438a-abb7-74d9fd5876dd" millisBetweenRetries="${retry.frequency}">
+		<try doc:name="Try" doc:id="95a4980e-82d8-4507-8b33-21078a84e3b4">
+			<http:request method="PUT" doc:name="Invoke CALM2 API" doc:id="a3ed05b3-156b-4592-a1f8-ac0868f73c05" path="${calm2.path}" sendCorrelationId="ALWAYS" outputMimeType="application/json" config-ref="S_CALM2_Http_Request_configuration">
 				<http:headers><![CDATA[#[output application/java
 ---
 {
@@ -41,23 +57,21 @@ output application/json
 	"Authorization" : attributes.headers.Authorization,
 	"X-CustCode" : vars.header.custCode,
 	"Transaction-Start-Time" : vars.transactionStartTime,
-	"X-ErpAccountNumber" : vars.header.accountNumber,
 	"client_id" : p('calm2.client_id')
 }]]]></http:headers>
 
 </http:request>
 				<error-handler>
-				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="1538033d-0a2e-476e-bfb5-ca7183721c63" type="HTTP:CONNECTIVITY, HTTP:INTERNAL_SERVER_ERROR, HTTP:METHOD_NOT_ALLOWED, HTTP:NOT_ACCEPTABLE, HTTP:PARSING, HTTP:RETRY_EXHAUSTED, HTTP:SECURITY, HTTP:SERVICE_UNAVAILABLE, HTTP:TIMEOUT, HTTP:TOO_MANY_REQUESTS, HTTP:UNAUTHORIZED, HTTP:UNSUPPORTED_MEDIA_TYPE, RETRY_EXHAUSTED,HTTP:RETRY_EXHAUSTED,HTTP:BAD_REQUEST, EXPRESSION, STREAM_MAXIMUM_SIZE_EXCEEDED">
-					<set-variable value="#[write(error.muleMessage.payload,'application/json')]" doc:name="Set Error Log" doc:id="3e3b4b3d-fadb-42d4-999c-294603f4cfe9" variableName="loggingPayload" />
-					<flow-ref doc:name="Call to Logging Sub Flow" doc:id="2459dc7a-238b-44e5-9484-24a19cfae2cc" name="logging-sub-flow" />
-					<flow-ref doc:name="Audit Error Flow" doc:id="af3ff541-0f1c-429d-883f-a13c8a0aee6a" name="audit-error-sub-flow" />
+				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="6b7a96a3-b52e-4e12-b15f-27b324147cd5" type="HTTP:CONNECTIVITY, HTTP:INTERNAL_SERVER_ERROR, HTTP:METHOD_NOT_ALLOWED, HTTP:NOT_ACCEPTABLE, HTTP:PARSING, HTTP:RETRY_EXHAUSTED, HTTP:SECURITY, HTTP:SERVICE_UNAVAILABLE, HTTP:TIMEOUT, HTTP:TOO_MANY_REQUESTS, HTTP:UNAUTHORIZED, HTTP:UNSUPPORTED_MEDIA_TYPE, RETRY_EXHAUSTED,HTTP:RETRY_EXHAUSTED,HTTP:BAD_REQUEST, EXPRESSION, STREAM_MAXIMUM_SIZE_EXCEEDED">
+					<set-variable value="#[write(error.muleMessage.payload,'application/json')]" doc:name="Set Error Log" doc:id="08b6313b-1b52-4a58-bdfc-27d8082131f3" variableName="loggingPayload" />
+					<flow-ref doc:name="Call to Logging Sub Flow" doc:id="8df84616-877d-4746-b896-9f25e549aad7" name="logging-sub-flow" />
+					<flow-ref doc:name="Audit Error Flow" doc:id="222f443a-9270-4cd0-bcad-3d58fac5e898" name="audit-error-sub-flow" />
 				</on-error-propagate>
 					
 				</error-handler>
 		</try>
 		</until-successful>
-		<set-variable value="#[vars.apiName ++ &quot;: &quot; ++ 's-calm2-api-impl-sub-flow']" doc:name="Set Flow Name" doc:id="8f2bf621-4964-4052-a39a-27c3a4a39219" variableName="flowName"/>
-		<flow-ref doc:name="Audit Process Exit" doc:id="cdeea9f8-7a2b-4a1d-bd85-0aa78f9ca307" name="audit-process-exit-sub-flow" />
-		<flow-ref doc:name="Log Process Exit" doc:id="26dc9598-1833-4427-84e4-ad08d95e0fe7" name="log-process-exit-sub-flow"/>
+		<flow-ref doc:name="Audit Process Exit" doc:id="ea24cb32-7301-4857-85f3-b5eaae66d6c2" name="audit-process-exit-sub-flow" />
+		<flow-ref doc:name="Log Process Exit" doc:id="6b7df88e-ebb2-46e5-912d-1cb17eb98cce" name="log-process-exit-sub-flow"/>
 	</sub-flow>
 </mule>
